@@ -9,4 +9,4 @@ b = set(map(int, input("Введите 2 список через пробел\n"
 print(a)
 print(b)
 print("Результат:")
-print(*(a.union(b)))
+print(*(a.intersection(b)))
