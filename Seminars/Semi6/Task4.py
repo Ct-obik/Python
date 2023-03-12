@@ -41,6 +41,7 @@ print_friendly_pairs(result_dict)
 
 # Второе решение
 
+
 def dividers_sum(n):            # Функция вычисления суммы делителей
     dsum = 0
     for i in range(1, n//2 + 1):
@@ -54,7 +55,7 @@ def friend_pair(n):
     for i in range(n):
         j = dividers_sum(i)
         if dividers_sum(j) == i and i != j and j < n:
-            if (j,i) not in pairs:
+            if (j, i) not in pairs:
                 pairs.append((i, j))
     return pairs
 
