@@ -31,11 +31,16 @@ def new_data() -> str:
 
 def find_data() -> str:
     with open('data.txt', 'r', encoding='utf-8') as file:
-        book = file.read().split('\n')
+        data = file.read().split('\n')
         temp = input('Веедите запрос: ')
-        for i in book:
-            if temp in i:
-                print(i)
+        result = [(data.index(book), book)
+                  for book in data if temp in book]
+        if len(result) >= 1:
+            [print(f'{result.index(book)+1}) {str(book[1])}')
+             for book in result]
+            return ([line[0] for line in result], data)
+        else:
+            return ([], data)
 
 
 def rewrite_data(strings, data) -> str:
@@ -49,7 +54,7 @@ def rewrite_data(strings, data) -> str:
 def edit_data() -> str:
     data = find_data()
     if len(data[0]) == 1:
-        rewrite_data(data[0][0], data[1], data.txt)
+        rewrite_data(data[0][0], data[1])
     elif len(data[0]) > 1:
         change = int(input('Введи номер для изменения: '))
         while change not in [i for i in range(1, len(data[0])+1)]:
@@ -60,9 +65,21 @@ def edit_data() -> str:
 
 def del_data(strings, data):
     with open('data.txt', 'w', encoding='utf-8') as file:
-        [file.write(f'{data[line]}\n') if line != strings else '' for line in range(len(data)-1)]
-        print('OK')
+        [file.write(f'{data[line]}\n') if line !=
+         strings else '' for line in range(len(data)-1)]
+        print('Запись удалена')
 
+
+def delete_data():
+    data = find_data()
+    if len(data[0]) == 1:
+        del_data(data[0][0], data[1])
+    elif len(data[0]) > 1:
+        change = int(input('Введи номер для изменения: '))
+        while change not in [i for i in range(1, len(data[0])+1)]:
+            print('Не верный номер')
+            change = int(input('Введи номер для изменения: '))
+        del_data(int(data[0][change-1]), data[1], data.txt)
 
 
 while True:
@@ -83,7 +100,7 @@ while True:
     elif mode == '4':
         edit_data()
     elif mode == '5':
-        del_data()
+        delete_data()
     elif mode == '0':
         break
     else:
